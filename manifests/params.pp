@@ -24,7 +24,7 @@ class duplicity_mysql::params {
     default => "${::root_home}/.my.cnf"
   }
 
-  $client_package_name = $::osfamily ? {
+  $mysql_client_package_name = $::osfamily ? {
     default => 'mysql-client'
   }
   $gzip_package_name = $::osfamily ? {

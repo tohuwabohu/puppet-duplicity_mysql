@@ -31,12 +31,12 @@
 # Copyright 2014 Martin Meinhold, unless otherwise noted.
 #
 class duplicity_mysql(
-  $dump_script_template = params_lookup('dump_script_template'),
-  $dump_script_path     = params_lookup('dump_script_path'),
-  $option_file          = params_lookup('option_file'),
-  $backup_dir           = params_lookup('backup_dir'),
-  $client_package_name  = params_lookup('client_package_name'),
-  $gzip_package_name    = params_lookup('gzip_package_name'),
+  $dump_script_template       = params_lookup('dump_script_template'),
+  $dump_script_path           = params_lookup('dump_script_path'),
+  $option_file                = params_lookup('option_file'),
+  $backup_dir                 = params_lookup('backup_dir'),
+  $mysql_client_package_name  = params_lookup('mysql_client_package_name'),
+  $gzip_package_name          = params_lookup('gzip_package_name'),
 ) inherits duplicity_mysql::params {
 
   if empty($dump_script_template) {
@@ -68,7 +68,7 @@ class duplicity_mysql(
     require => [
       File[$option_file],
       File[$backup_dir],
-      Package[$client_package_name],
+      Package[$mysql_client_package_name],
       Package[$gzip_package_name],
     ]
   }
