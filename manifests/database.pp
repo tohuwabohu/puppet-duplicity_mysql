@@ -58,7 +58,11 @@ define duplicity_mysql::database(
   if $ensure == present {
     exec { "${duplicity_mysql::restore_script_path} ${database}":
       onlyif  => "${duplicity_mysql::check_script_path} ${database}",
-      require => Duplicity::File[$dump_file],
+      require => [
+        Duplicity::File[$dump_file],
+        File[$duplicity_mysql::check_script_path],
+        File[$duplicity_mysql::restore_script_path],
+      ]
     }
   }
 }
