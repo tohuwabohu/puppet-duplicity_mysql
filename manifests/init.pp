@@ -1,0 +1,75 @@
+# == Class: duplicity_mysql
+#
+# Manage scripts to backup and restore MySQL databases.
+#
+# === Parameters
+#
+# [*dump_script_template*]
+#   Set the template to be used when creating the dump script.
+#
+# [*dump_script_path*]
+#   Set the path where to write the dump script to.
+#
+# [*option_file*]
+#   Set the path to the option file containing username and password to access the database.
+#
+# [*backup_dir*]
+#   Set the directory where to store the dump files.
+#
+# [*client_package_name*]
+#   Set the name of the package which contains the mysqldump utility.
+#
+# [*gzip_package_name*]
+#   Set the name of the package which contains the gzip utility.
+#
+# === Authors
+#
+# Martin Meinhold <Martin.Meinhold@gmx.de>
+#
+# === Copyright
+#
+# Copyright 2014 Martin Meinhold, unless otherwise noted.
+#
+class duplicity_mysql(
+  $dump_script_template = params_lookup('dump_script_template'),
+  $dump_script_path     = params_lookup('dump_script_path'),
+  $option_file          = params_lookup('option_file'),
+  $backup_dir           = params_lookup('backup_dir'),
+  $client_package_name  = params_lookup('client_package_name'),
+  $gzip_package_name    = params_lookup('gzip_package_name'),
+) inherits duplicity_mysql::params {
+
+  if empty($dump_script_template) {
+    fail('Class[Duplicity_Mysql]: dump_script_template must not be empty')
+  }
+  validate_absolute_path($dump_script_path)
+  validate_absolute_path($option_file)
+  validate_absolute_path($backup_dir)
+  if empty($client_package_name) {
+    fail('Class[Duplicity_Mysql]: client_package_name must not be empty')
+  }
+  if empty($gzip_package_name) {
+    fail('Class[Duplicity_Mysql]: gzip_package_name must not be empty')
+  }
+
+  file { $backup_dir:
+    ensure => directory,
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0600',
+  }
+
+  file { $dump_script_path:
+    ensure  => file,
+    content => template($dump_script_template),
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0755',
+    require => [
+      File[$option_file],
+      File[$backup_dir],
+      Package[$client_package_name],
+      Package[$gzip_package_name],
+    ]
+  }
+}
