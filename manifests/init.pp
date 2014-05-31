@@ -2,6 +2,11 @@
 #
 # Manage scripts to backup and restore MySQL databases.
 #
+# The following scripts are managed:
+#   * Dump a given database to a file
+#   * Check if a given database is empty
+#   * Restore a given dump file into a database
+#
 # === Parameters
 #
 # [*dump_script_template*]
@@ -9,6 +14,18 @@
 #
 # [*dump_script_path*]
 #   Set the path where to write the dump script to.
+#
+# [*check_script_template*]
+#   Set the template to be used when creating the check script.
+#
+# [*check_script_path*]
+#   Set the path where to write the check script to.
+#
+# [*restore_script_template*]
+#   Set the template to be used when creating the restore script.
+#
+# [*restore_script_path*]
+#   Set the path where to write the restore script to.
 #
 # [*option_file*]
 #   Set the path to the option file containing username and password to access the database.
@@ -40,6 +57,7 @@ class duplicity_mysql(
   $option_file                = params_lookup('option_file'),
   $backup_dir                 = params_lookup('backup_dir'),
   $mysql_client_package_name  = params_lookup('mysql_client_package_name'),
+  $grep_package_name          = params_lookup('grep_package_name'),
   $gzip_package_name          = params_lookup('gzip_package_name'),
 ) inherits duplicity_mysql::params {
 
