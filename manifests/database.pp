@@ -50,6 +50,7 @@ define duplicity_mysql::database(
     content => "${dump_script_path} ${database}",
     order   => '10',
   }
+
   duplicity::file { $dump_file:
     ensure  => $ensure,
     profile => $profile
