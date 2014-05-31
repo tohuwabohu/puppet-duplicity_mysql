@@ -31,10 +31,10 @@ define duplicity_mysql::database(
   require duplicity_mysql
 
   if $ensure !~ /^present|backup|absent$/ {
-    fail("Duplicity::Database[${title}]: ensure must be either present, backup or absent, got '${ensure}'")
+    fail("Duplicity_Mysql::Database[${title}]: ensure must be either present, backup or absent, got '${ensure}'")
   }
   if $ensure =~ /^present|backup$/ and empty($profile) {
-    fail("Duplicity::Database[${title}]: profile must not be empty")
+    fail("Duplicity_Mysql::Database[${title}]: profile must not be empty")
   }
 
   $profile_dir = "${duplicity::params::duply_config_dir}/${profile}"
