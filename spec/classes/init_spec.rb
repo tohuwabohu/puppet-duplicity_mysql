@@ -9,14 +9,14 @@ describe 'duplicity_mysql' do
 
     it { should contain_file('/usr/local/sbin/dump-mysql-database.sh').with(
         'ensure' => 'file',
-        'mode'   => '0755',
+        'mode'   => '0755'
       )
     }
     it { should contain_file('/var/backups/mysql').with(
         'ensure' => 'directory',
         'owner'  => 'root',
         'group'  => 'root',
-        'mode'   => '0600',
+        'mode'   => '0600'
       )
     }
   end
