@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+# This file is managed by Puppet
+
+# Check if the given database is empty. Should exit with zero if the given database is empty, a non-zero value
+# otherwise.
+
 if [ -z "$1" ]; then
   echo "usage: $0 <database>" 1>2&
   exit 1
