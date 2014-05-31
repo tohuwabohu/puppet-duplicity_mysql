@@ -48,11 +48,13 @@ define duplicity_mysql::database(
     profile => $profile,
     content => "${duplicity_mysql::dump_script_path} ${database}",
     order   => '10',
+    require => Duplicity::Profile[$profile],
   }
 
   duplicity::file { $dump_file:
     ensure  => $ensure,
-    profile => $profile
+    profile => $profile,
+    require => Duplicity::Profile[$profile],
   }
 
   if $ensure == present {
