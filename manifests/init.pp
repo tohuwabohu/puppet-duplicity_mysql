@@ -33,8 +33,11 @@
 # [*backup_dir*]
 #   Set the directory where to store the dump files.
 #
-# [*client_package_name*]
+# [*mysql_client_package_name*]
 #   Set the name of the package which contains the mysqldump utility.
+#
+# [*grep_package_name*]
+#   Set the name of the package which contains the grep utility.
 #
 # [*gzip_package_name*]
 #   Set the name of the package which contains the gzip utility.
