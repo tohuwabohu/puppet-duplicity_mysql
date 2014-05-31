@@ -33,6 +33,10 @@
 class duplicity_mysql(
   $dump_script_template       = params_lookup('dump_script_template'),
   $dump_script_path           = params_lookup('dump_script_path'),
+  $check_script_template      = params_lookup('check_script_template'),
+  $check_script_path          = params_lookup('check_script_path'),
+  $restore_script_template    = params_lookup('restore_script_template'),
+  $restore_script_path        = params_lookup('restore_script_path'),
   $option_file                = params_lookup('option_file'),
   $backup_dir                 = params_lookup('backup_dir'),
   $mysql_client_package_name  = params_lookup('mysql_client_package_name'),
@@ -62,6 +66,33 @@ class duplicity_mysql(
   file { $dump_script_path:
     ensure  => file,
     content => template($dump_script_template),
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0755',
+    require => [
+      File[$option_file],
+      File[$backup_dir],
+      Package[$mysql_client_package_name],
+      Package[$gzip_package_name],
+    ]
+  }
+
+  file { $check_script_path:
+    ensure  => file,
+    content => template($check_script_template),
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0755',
+    require => [
+      File[$option_file],
+      Package[$mysql_client_package_name],
+      Package[$grep_package_name],
+    ]
+  }
+
+  file { $restore_script_path:
+    ensure  => file,
+    content => template($restore_script_template),
     owner   => 'root',
     group   => 'root',
     mode    => '0755',

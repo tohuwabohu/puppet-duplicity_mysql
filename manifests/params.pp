@@ -20,12 +20,25 @@ class duplicity_mysql::params {
     default => '/usr/local/sbin/dump-mysql-database.sh'
   }
 
+  $check_script_template = 'duplicity_mysql/usr/local/sbin/check-mysql-database.sh.erb'
+  $check_script_path = $::osfamily ? {
+    default => '/usr/local/sbin/check-mysql-database.sh'
+  }
+
+  $restore_script_template = 'duplicity_mysql/usr/local/sbin/restore-mysql-database.sh.erb'
+  $restore_script_path = $::osfamily ? {
+    default => '/usr/local/sbin/restore-mysql-database.sh'
+  }
+
   $option_file = $::osfamily ? {
     default => "${::root_home}/.my.cnf"
   }
 
   $mysql_client_package_name = $::osfamily ? {
     default => 'mysql-client'
+  }
+  $grep_package_name = $::osfamily ? {
+    default => 'grep'
   }
   $gzip_package_name = $::osfamily ? {
     default => 'gzip'

@@ -7,12 +7,22 @@ describe 'duplicity_mysql' do
   describe 'by default' do
     let(:params) { {} }
 
-    it { should contain_file('/usr/local/sbin/dump-mysql-database.sh').with(
+    specify { should contain_file('/usr/local/sbin/dump-mysql-database.sh').with(
         'ensure' => 'file',
         'mode'   => '0755'
       )
     }
-    it { should contain_file('/var/backups/mysql').with(
+    specify { should contain_file('/usr/local/sbin/check-mysql-database.sh').with(
+        'ensure' => 'file',
+        'mode'   => '0755'
+      )
+    }
+    specify { should contain_file('/usr/local/sbin/restore-mysql-database.sh').with(
+        'ensure' => 'file',
+        'mode'   => '0755'
+      )
+    }
+    specify { should contain_file('/var/backups/mysql').with(
         'ensure' => 'directory',
         'owner'  => 'root',
         'group'  => 'root',

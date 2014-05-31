@@ -37,7 +37,6 @@ define duplicity_mysql::database(
     fail("Duplicity_Mysql::Database[${title}]: profile must not be empty")
   }
 
-  $dump_script_path = $duplicity_mysql::dump_script_path
   $dump_file = "${duplicity_mysql::backup_dir}/${database}.sql.gz"
   $exec_before_ensure = $ensure ? {
     absent  => absent,
@@ -47,12 +46,19 @@ define duplicity_mysql::database(
   duplicity::profile_exec_before { "${profile}/mysql/${database}":
     ensure  => $exec_before_ensure,
     profile => $profile,
-    content => "${dump_script_path} ${database}",
+    content => "${duplicity_mysql::dump_script_path} ${database}",
     order   => '10',
   }
 
   duplicity::file { $dump_file:
     ensure  => $ensure,
     profile => $profile
+  }
+
+  if $ensure == present {
+    exec { "${duplicity_mysql::restore_script_path} ${database}":
+      onlyif  => "${duplicity_mysql::check_script_path} ${database}",
+      require => Duplicity::File[$dump_file],
+    }
   }
 }
