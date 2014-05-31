@@ -45,8 +45,8 @@ class duplicity_mysql(
   validate_absolute_path($dump_script_path)
   validate_absolute_path($option_file)
   validate_absolute_path($backup_dir)
-  if empty($client_package_name) {
-    fail('Class[Duplicity_Mysql]: client_package_name must not be empty')
+  if empty($mysql_client_package_name) {
+    fail('Class[Duplicity_Mysql]: mysql_client_package_name must not be empty')
   }
   if empty($gzip_package_name) {
     fail('Class[Duplicity_Mysql]: gzip_package_name must not be empty')
