@@ -16,7 +16,7 @@ DATABASE="$1"
 DUMP_FILE="<%= @backup_dir %>/$DATABASE.sql.gz"
 MYSQL_CREDENTIALS="--defaults-file=<%= @option_file %>"
 
-ps cax | grep -q mysqld
+ps cax | grep -q mysqld > /dev/null
 if [ $? -eq 0 ]; then
   zcat "$DUMP_FILE" | mysql $MYSQL_CREDENTIALS -Bs -D $DATABASE
 else
