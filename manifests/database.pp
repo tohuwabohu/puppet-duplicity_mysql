@@ -26,7 +26,7 @@
 define duplicity_mysql::database(
   $ensure   = present,
   $database = $title,
-  $profile  = 'backup',
+  $profile  = 'system',
 ) {
   require duplicity_mysql
 
