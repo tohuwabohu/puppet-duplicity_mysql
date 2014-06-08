@@ -15,6 +15,11 @@
 #   Set the name of the duplicity profile where the database dump file is added to. The profile's backup will be
 #   queried when the dump file is not existing and a restore is kicked off.
 #
+# [*timeout*]
+#   Set the maximum time each restore should take: the restore of the database dump and the import into the database.
+#   If one operation takes longer than the timeout, it is considered to #   have failed and will be stopped. The
+#   timeout is specified in seconds. The default timeout is 300 seconds and you can set it to 0 to disable the timeout.
+#
 # === Authors
 #
 # Martin Meinhold <Martin.Meinhold@gmx.de>
@@ -27,6 +32,7 @@ define duplicity_mysql::database(
   $ensure   = present,
   $database = $title,
   $profile  = 'system',
+  $timeout  = 300,
 ) {
   require duplicity_mysql
 
@@ -52,17 +58,19 @@ define duplicity_mysql::database(
 
   duplicity::file { $dump_file:
     ensure  => $ensure,
-    profile => $profile
+    profile => $profile,
+    timeout => $timeout,
   }
 
   if $ensure == present {
     exec { "${duplicity_mysql::restore_script_path} ${database}":
       onlyif  => "${duplicity_mysql::check_script_path} ${database}",
+      timeout => $timeout,
       require => [
         Duplicity::File[$dump_file],
         File[$duplicity_mysql::check_script_path],
         File[$duplicity_mysql::restore_script_path],
-      ]
+      ],
     }
   }
 }
