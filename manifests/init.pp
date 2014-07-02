@@ -51,17 +51,17 @@
 # Copyright 2014 Martin Meinhold, unless otherwise noted.
 #
 class duplicity_mysql(
-  $dump_script_template       = params_lookup('dump_script_template'),
-  $dump_script_path           = params_lookup('dump_script_path'),
-  $check_script_template      = params_lookup('check_script_template'),
-  $check_script_path          = params_lookup('check_script_path'),
-  $restore_script_template    = params_lookup('restore_script_template'),
-  $restore_script_path        = params_lookup('restore_script_path'),
-  $option_file                = params_lookup('option_file'),
-  $backup_dir                 = params_lookup('backup_dir'),
-  $mysql_client_package_name  = params_lookup('mysql_client_package_name'),
-  $grep_package_name          = params_lookup('grep_package_name'),
-  $gzip_package_name          = params_lookup('gzip_package_name'),
+  $dump_script_template       = $duplicity_mysql::params::dump_script_template,
+  $dump_script_path           = $duplicity_mysql::params::dump_script_path,
+  $check_script_template      = $duplicity_mysql::params::check_script_template,
+  $check_script_path          = $duplicity_mysql::params::check_script_path,
+  $restore_script_template    = $duplicity_mysql::params::restore_script_template,
+  $restore_script_path        = $duplicity_mysql::params::restore_script_path,
+  $option_file                = $duplicity_mysql::params::option_file,
+  $backup_dir                 = $duplicity_mysql::params::backup_dir,
+  $mysql_client_package_name  = $duplicity_mysql::params::mysql_client_package_name,
+  $grep_package_name          = $duplicity_mysql::params::grep_package_name,
+  $gzip_package_name          = $duplicity_mysql::params::gzip_package_name,
 ) inherits duplicity_mysql::params {
 
   if empty($dump_script_template) {
