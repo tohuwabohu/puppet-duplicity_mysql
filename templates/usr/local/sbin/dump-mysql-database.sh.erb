@@ -15,7 +15,7 @@ fi
 DATABASE="$1"
 DUMP_FILE="<%= @backup_dir %>/$DATABASE.sql.gz"
 MYSQL_CREDENTIALS="--defaults-file=<%= @option_file %>"
-MYSQL_OPTS="--skip-opt --add-drop-table --no-create-db --create-options --comments \
+MYSQL_OPTS="--skip-opt --no-create-db --add-drop-table --create-options --comments \
             --quick --no-autocommit --disable-keys \
             --set-charset --default-character-set=utf8 --compress --ignore-table=mysql.event"
 
