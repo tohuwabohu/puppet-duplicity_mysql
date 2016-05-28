@@ -15,9 +15,9 @@ fi
 DATABASE="$1"
 DUMP_FILE="<%= @backup_dir %>/$DATABASE.sql.gz"
 MYSQL_CREDENTIALS="--defaults-file=<%= @option_file %>"
-MYSQL_OPTS="--skip-opt --add-drop-table --create-options --disable-keys --comments \
-            --quick --set-charset --no-create-db --default-character-set=utf8 \
-            --compress --ignore-table=mysql.event"
+MYSQL_OPTS="--skip-opt --add-drop-table --no-create-db --create-options --comments \
+            --quick --no-autocommit --disable-keys \
+            --set-charset --default-character-set=utf8 --compress --ignore-table=mysql.event"
 
 ps cax | grep mysqld > /dev/null
 if [ $? -eq 0 ]; then
