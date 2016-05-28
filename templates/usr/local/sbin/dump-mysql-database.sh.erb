@@ -21,6 +21,6 @@ MYSQL_OPTS="--skip-opt --no-create-db --add-drop-table --create-options --commen
 
 ps cax | grep mysqld > /dev/null
 if [ $? -eq 0 ]; then
-  mysqldump $MYSQL_CREDENTIALS $MYSQL_OPTS --databases "$DATABASE" | gzip > "$DUMP_FILE"
+  mysqldump $MYSQL_CREDENTIALS $MYSQL_OPTS "$DATABASE" | gzip > "$DUMP_FILE"
   chmod go-rwx "$DUMP_FILE"
 fi
