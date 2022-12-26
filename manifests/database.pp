@@ -29,19 +29,12 @@
 # Copyright 2014 Martin Meinhold, unless otherwise noted.
 #
 define duplicity_mysql::database(
-  $ensure   = present,
-  $database = $title,
-  $profile  = 'system',
-  $timeout  = 300,
+  Enum[present,backup,absent] $ensure = present,
+  String $database = $title,
+  String $profile = 'system',
+  Integer $timeout = 300,
 ) {
   require duplicity_mysql
-
-  if $ensure !~ /^present|backup|absent$/ {
-    fail("Duplicity_Mysql::Database[${title}]: ensure must be either present, backup or absent, got '${ensure}'")
-  }
-  if $ensure =~ /^present|backup$/ and empty($profile) {
-    fail("Duplicity_Mysql::Database[${title}]: profile must not be empty")
-  }
 
   $dump_file = "${duplicity_mysql::backup_dir}/${database}.sql.gz"
   $exec_before_ensure = $ensure ? {

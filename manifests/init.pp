@@ -51,32 +51,18 @@
 # Copyright 2014 Martin Meinhold, unless otherwise noted.
 #
 class duplicity_mysql(
-  $dump_script_template       = $duplicity_mysql::params::dump_script_template,
-  $dump_script_path           = $duplicity_mysql::params::dump_script_path,
-  $check_script_template      = $duplicity_mysql::params::check_script_template,
-  $check_script_path          = $duplicity_mysql::params::check_script_path,
-  $restore_script_template    = $duplicity_mysql::params::restore_script_template,
-  $restore_script_path        = $duplicity_mysql::params::restore_script_path,
-  $option_file                = $duplicity_mysql::params::option_file,
-  $backup_dir                 = $duplicity_mysql::params::backup_dir,
-  $mysql_client_package_name  = $duplicity_mysql::params::mysql_client_package_name,
-  $grep_package_name          = $duplicity_mysql::params::grep_package_name,
-  $gzip_package_name          = $duplicity_mysql::params::gzip_package_name,
+  String $dump_script_template = $duplicity_mysql::params::dump_script_template,
+  Stdlib::Absolutepath $dump_script_path = $duplicity_mysql::params::dump_script_path,
+  String $check_script_template = $duplicity_mysql::params::check_script_template,
+  Stdlib::Absolutepath $check_script_path = $duplicity_mysql::params::check_script_path,
+  String $restore_script_template = $duplicity_mysql::params::restore_script_template,
+  Stdlib::Absolutepath $restore_script_path = $duplicity_mysql::params::restore_script_path,
+  Stdlib::Absolutepath $option_file = $duplicity_mysql::params::option_file,
+  Stdlib::Absolutepath $backup_dir = $duplicity_mysql::params::backup_dir,
+  String $mysql_client_package_name = $duplicity_mysql::params::mysql_client_package_name,
+  String $grep_package_name = $duplicity_mysql::params::grep_package_name,
+  String $gzip_package_name = $duplicity_mysql::params::gzip_package_name,
 ) inherits duplicity_mysql::params {
-
-  if empty($dump_script_template) {
-    fail('Class[Duplicity_Mysql]: dump_script_template must not be empty')
-  }
-  validate_absolute_path($dump_script_path)
-  validate_absolute_path($option_file)
-  validate_absolute_path($backup_dir)
-  if empty($mysql_client_package_name) {
-    fail('Class[Duplicity_Mysql]: mysql_client_package_name must not be empty')
-  }
-  if empty($gzip_package_name) {
-    fail('Class[Duplicity_Mysql]: gzip_package_name must not be empty')
-  }
-
   file { $backup_dir:
     ensure => directory,
     owner  => 'root',
