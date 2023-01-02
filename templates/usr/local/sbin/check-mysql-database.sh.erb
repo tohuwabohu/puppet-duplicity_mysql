@@ -19,8 +19,7 @@ DATABASE="$1"
 MYSQL_CREDENTIALS="--defaults-file=<%= @option_file %>"
 QUERY="SELECT count(*) FROM information_schema.tables WHERE table_schema = '${DATABASE}'"
 
-ps cax | grep -q mysqld > /dev/null
-if [ $? -eq 0 ]; then
+if systemctl is-active mysqld.service; then
   mysql $MYSQL_CREDENTIALS -NBs -e "$QUERY" | grep -qw 0
 else
   echo "MySQL server not running - check of database ${DATABASE} aborted." 1>&2

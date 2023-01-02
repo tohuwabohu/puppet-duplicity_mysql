@@ -19,8 +19,7 @@ MYSQL_OPTS="--skip-opt --no-create-db --add-drop-table --create-options --commen
             --quick --no-autocommit --disable-keys \
             --set-charset --default-character-set=utf8 --compress --ignore-table=mysql.event"
 
-ps cax | grep mysqld > /dev/null
-if [ $? -eq 0 ]; then
+if  systemctl is-active mysqld.service; then
   set -e
   set -o pipefail
   mysqldump $MYSQL_CREDENTIALS $MYSQL_OPTS "$DATABASE" | gzip > "$DUMP_FILE"
