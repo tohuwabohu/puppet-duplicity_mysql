@@ -50,7 +50,7 @@ GEM
     rspec-puppet (1.0.1)
       rspec
     semantic_puppet (1.0.4)
-    thor (1.1.0)
+    thor (1.4.0)
 
 PLATFORMS
   ruby
